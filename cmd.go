@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -46,7 +47,13 @@ func initConfig() {
 	viper.AutomaticEnv()
 }
 
-func configFromViper() *Config {
+func configFromViper(cmd *cobra.Command) *Config {
+	if viper.GetString("url") == "" {
+		cmd.Help()
+		fmt.Println("\nError: url is required.\n")
+		os.Exit(1)
+	}
+
 	return &Config{
 		URL:        viper.GetString("url"),
 		Threads:    viper.GetInt("threads"),
@@ -55,8 +62,8 @@ func configFromViper() *Config {
 	}
 }
 
-func run(_ *cobra.Command, _ []string) error {
-	config := configFromViper()
+func run(cmd *cobra.Command, _ []string) error {
+	config := configFromViper(cmd)
 
 	fmt.Printf("Test config: %s\n", config)
 	perf(config)
