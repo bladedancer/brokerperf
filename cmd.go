@@ -30,10 +30,12 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	RootCmd.Flags().StringP("url", "u", "", "the url to hit")
 	RootCmd.Flags().IntP("threads", "t", 1, "number of threads")
+	RootCmd.Flags().IntP("apikey", "a", 1, "the api key") // explicit as viper stringslice don't like spaces
 	RootCmd.Flags().IntP("iterations", "i", 1, "number of iterations per thread")
 	RootCmd.Flags().StringSliceP("header", "H", []string{}, "headers")
 
 	bindOrPanic("url", RootCmd.Flags().Lookup("url"))
+	bindOrPanic("apikey", RootCmd.Flags().Lookup("apikey"))
 	bindOrPanic("threads", RootCmd.Flags().Lookup("threads"))
 	bindOrPanic("iterations", RootCmd.Flags().Lookup("iterations"))
 	bindOrPanic("header", RootCmd.Flags().Lookup("header"))
@@ -50,12 +52,13 @@ func initConfig() {
 func configFromViper(cmd *cobra.Command) *Config {
 	if viper.GetString("url") == "" {
 		cmd.Help()
-		fmt.Println("\nError: url is required.\n")
+		fmt.Printf("\nError: url is required.\n\n")
 		os.Exit(1)
 	}
 
 	return &Config{
 		URL:        viper.GetString("url"),
+		APIKey:     viper.GetString("apikey"),
 		Threads:    viper.GetInt("threads"),
 		Iterations: viper.GetInt("iterations"),
 		Headers:    viper.GetStringSlice("header"),

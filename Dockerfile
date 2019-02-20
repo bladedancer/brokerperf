@@ -14,6 +14,10 @@ USER axway
 
 FROM scratch
 
+# ENV PERF_APIKEY
+# ENV PERF_THREADS
+# ENV PERF_ITERATIONS
+# ENV PERF_URL
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /go/src/github.com/bladedancer/brokerperf/brokerperf /root/brokerperf
 COPY --from=builder /etc/passwd /etc/passwd

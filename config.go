@@ -8,11 +8,12 @@ import (
 // Config the test config.
 type Config struct {
 	URL        string
+	APIKey     string
 	Threads    int
 	Iterations int
 	Headers    []string
 }
 
 func (c Config) String() string {
-	return fmt.Sprintf("[%d:%d] - %s [%s]", c.Threads, c.Iterations, c.URL, strings.Join(c.Headers, ","))
+	return fmt.Sprintf("[%d:%d] - %s [%s]{%s}", c.Threads, c.Iterations, c.URL, c.APIKey, strings.Join(c.Headers, ","))
 }

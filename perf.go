@@ -19,6 +19,12 @@ func httpget(wg *sync.WaitGroup, id string, config *Config) {
 
 	for i := 0; i < config.Iterations; i++ {
 		req, _ := http.NewRequest("GET", config.URL, nil)
+
+		// Add the APIKey if there is one
+		if len(config.APIKey) > 0 {
+			req.Header.Set("Authorization", "Apikey "+config.APIKey)
+		}
+		// Add additional headers
 		for h := range config.Headers {
 			header := strings.SplitN(config.Headers[h], ":", 2)
 			req.Header.Set(header[0], header[1])
