@@ -30,7 +30,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	RootCmd.Flags().StringP("url", "u", "", "the url to hit")
 	RootCmd.Flags().IntP("threads", "t", 1, "number of threads")
-	RootCmd.Flags().StringP("apikey", "a", 1, "the api key") // explicit as viper stringslice don't like spaces
+	RootCmd.Flags().StringP("apikey", "a", "", "the api key") // explicit as viper stringslice don't like spaces
 	RootCmd.Flags().IntP("iterations", "i", 1, "number of iterations per thread")
 	RootCmd.Flags().StringSliceP("header", "H", []string{}, "headers")
 
