@@ -31,7 +31,9 @@ func oneget(client *http.Client, id string, config *Config) {
 	res, err := client.Do(req)
 	end := now()
 
-	defer res.Body.Close()
+	if res != nil && res.Body != nil {
+		defer res.Body.Close()
+	}
 
 	if err != nil {
 		fmt.Printf("%s: (%d) %s\n", id, end-start, err)
